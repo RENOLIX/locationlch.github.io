@@ -69,6 +69,8 @@ const steps = [
   "Maintenance, remplacement et pilotage du parc",
 ];
 
+const logoUrl = `${import.meta.env.BASE_URL}images/lch-logo.png`;
+
 function GlassButton({
   children,
   href,
@@ -99,7 +101,7 @@ export default function App() {
       <section ref={heroRef} className="hero" id="accueil">
         <header className="site-header">
           <a className="brand" href="#accueil" aria-label="LCH Auto accueil">
-            <img src="/images/lch-logo.png" alt="EURL LCH Automotive Fleet" />
+            <img src={logoUrl} alt="EURL LCH Automotive Fleet" />
           </a>
           <nav aria-label="Navigation principale">
             <a href="#services">Services</a>
