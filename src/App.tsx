@@ -13,6 +13,7 @@ type Vehicle = {
 
 const base = import.meta.env.BASE_URL;
 const logoUrl = `${base}images/lch-logo.png`;
+const aboutFleetImage = `${base}images/about-fleet.png`;
 const phoneNumber = "0560666705";
 
 const heroSlides = [
@@ -285,7 +286,6 @@ function BrandMarquee({ dark = false }: { dark?: boolean }) {
     <section className={`brand-marquee ${dark ? "dark" : ""}`}>
       <div className="brand-marquee-title">
         <span>Marques disponibles</span>
-        <strong>Renault, Dacia, Opel, Geely, MG, Fiat, VW, Audi, Kia, Hyundai...</strong>
       </div>
       <div className="marquee-window">
         <div className="marquee-track">
@@ -418,13 +418,13 @@ function FleetSection({ preview = false }: { preview?: boolean }) {
           <span className="eyebrow blue">Gamme vehicules</span>
           <h2>Vehicules disponibles avec filtres par categorie.</h2>
         </div>
-        <div className="fleet-filters">
-          {filters.map((item) => (
-            <button className={filter === item ? "active" : ""} key={item} type="button" onClick={() => setFilter(item)}>
-              {item}
-            </button>
-          ))}
-        </div>
+      </div>
+      <div className="fleet-filters" aria-label="Filtres de categorie">
+        {filters.map((item) => (
+          <button className={filter === item ? "active" : ""} key={item} type="button" onClick={() => setFilter(item)}>
+            {item}
+          </button>
+        ))}
       </div>
       <div className="vehicle-grid">
         {filtered.map((vehicle) => (
@@ -522,14 +522,27 @@ function SecondaryPage() {
 function AboutPage() {
   return (
     <main className="page">
-      <div className="page-title">
-        <span className="eyebrow blue">A propos</span>
-        <h1>EURL LCH Automotive Fleet, sigle LCH Auto.</h1>
-        <p>
-          Nous aidons les entreprises a externaliser leur mobilite pour se concentrer sur leur coeur de metier.
-          Notre role : selectionner, fournir, suivre et maintenir les moyens roulants adaptes a chaque mission.
-        </p>
-      </div>
+      <section className="about-hero">
+        <div className="page-title">
+          <span className="eyebrow blue">A propos</span>
+          <h1>EURL LCH Automotive Fleet, sigle LCH Auto.</h1>
+          <p>
+            LCH Auto accompagne les entreprises dans la gestion de leur mobilite professionnelle avec une offre
+            complete : location longue duree, location moyenne duree, mise a disposition de vehicules, vente avec
+            facturation, maintenance auto et pieces de rechange.
+          </p>
+          <p>
+            Notre mission est d'aider les dirigeants, responsables moyens generaux, services logistiques et equipes
+            terrain a disposer d'un parc fiable, adapte et disponible. Nous selectionnons les vehicules selon l'usage
+            reel de l'entreprise : citadines pour les deplacements urbains, berlines pour les cadres, vehicules de
+            prestige pour la direction, utilitaires et pick-up pour les operations, motos pour la livraison, bus,
+            camions et engins TP pour les missions specifiques.
+          </p>
+        </div>
+        <figure>
+          <img src={aboutFleetImage} alt="Flotte professionnelle LCH Auto" />
+        </figure>
+      </section>
       <section className="section secondary-grid about-capabilities">
         <article>
           <h3>Location entreprise</h3>

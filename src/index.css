@@ -467,7 +467,12 @@ h3 {
 }
 
 .brand-chip span {
+  color: white;
   font-weight: 700;
+}
+
+.brand-marquee:not(.dark) .brand-marquee-title strong {
+  color: #111827;
 }
 
 @keyframes marquee {
@@ -597,14 +602,17 @@ h3 {
 
 .activity-grid article {
   min-height: 180px;
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
   padding: 22px;
   border: 1px solid var(--border);
   border-radius: 10px;
   background: #fff;
   box-shadow: 0 18px 44px rgba(15, 23, 42, 0.07);
+  text-align: center;
 }
 
 .page-intro-grid {
@@ -658,6 +666,11 @@ h3 {
   line-height: 1.65;
 }
 
+.activity-grid h3,
+.activity-grid p {
+  margin-bottom: 0;
+}
+
 .about-preview button,
 .contact-form button {
   min-height: 48px;
@@ -671,12 +684,18 @@ h3 {
 
 .fleet-filters {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-end;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
   gap: 8px;
+  width: 100%;
+  margin: -10px 0 28px;
+  overflow-x: auto;
+  padding-bottom: 6px;
+  scrollbar-width: thin;
 }
 
 .fleet-filters button {
+  flex: 0 0 auto;
   min-height: 40px;
   border: 1px solid var(--border);
   border-radius: 999px;
@@ -684,6 +703,7 @@ h3 {
   color: #111827;
   padding: 9px 12px;
   font-weight: 700;
+  white-space: nowrap;
 }
 
 .fleet-filters button.active,
@@ -749,6 +769,38 @@ h3 {
   font-size: clamp(2rem, 3.2vw, 3rem);
   font-weight: 700;
   line-height: 1.08;
+}
+
+.about-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(360px, 0.9fr);
+  gap: clamp(26px, 5vw, 68px);
+  align-items: center;
+  margin-bottom: 34px;
+}
+
+.about-hero .page-title {
+  margin-bottom: 0;
+}
+
+.about-hero .page-title p + p {
+  margin-top: 14px;
+}
+
+.about-hero figure {
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 18px 44px rgba(15, 23, 42, 0.08);
+}
+
+.about-hero img {
+  width: 100%;
+  min-height: 360px;
+  display: block;
+  object-fit: cover;
 }
 
 .secondary-grid {
@@ -963,6 +1015,7 @@ h3 {
   .site-header,
   .hero-inner,
   .activities-shell,
+  .about-hero,
   .section-head.split,
   .about-preview,
   .maintenance-flow,
@@ -1031,7 +1084,7 @@ h3 {
   }
 
   .fleet-filters {
-    justify-content: flex-start;
+    margin-top: -8px;
   }
 }
 
