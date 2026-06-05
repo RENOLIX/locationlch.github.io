@@ -1,147 +1,237 @@
 import { useEffect, useMemo, useState } from "react";
 import LiquidGlass from "liquid-glass-react";
 
-type Page = "accueil" | "vehicules" | "services" | "marques" | "contact";
+type Page = "accueil" | "flotte" | "secondaire" | "apropos" | "contact";
 
 type Vehicle = {
   name: string;
   category: string;
-  tag: string;
+  activity: string;
   image: string;
-  seats: string;
-  use: string;
+  fallback: string;
+  desc: string;
 };
 
-const logoUrl = `${import.meta.env.BASE_URL}images/lch-logo.png`;
+const base = import.meta.env.BASE_URL;
+const logoUrl = `${base}images/lch-logo.png`;
 
-const heroImage =
-  "https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?auto=format&fit=crop&w=1800&q=82";
+const heroSlides = [
+  {
+    image: "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=1900&q=86",
+    title: "Location de vehicules et gestion de flotte pour entreprises.",
+  },
+  {
+    image: "https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?auto=format&fit=crop&w=1900&q=86",
+    title: "LLD, LMD, utilitaires, motos et materiel roulant.",
+  },
+  {
+    image: "https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?auto=format&fit=crop&w=1900&q=86",
+    title: "Votre mobilite devient un levier de performance.",
+  },
+];
 
 const brandLogos = [
-  ["Renault", "https://cdn.simpleicons.org/renault/073B78"],
-  ["Dacia", "https://cdn.simpleicons.org/dacia/073B78"],
-  ["Peugeot", "https://cdn.simpleicons.org/peugeot/073B78"],
-  ["Fiat", "https://cdn.simpleicons.org/fiat/073B78"],
-  ["Opel", "https://cdn.simpleicons.org/opel/073B78"],
-  ["Volkswagen", "https://cdn.simpleicons.org/volkswagen/073B78"],
-  ["Audi", "https://cdn.simpleicons.org/audi/073B78"],
-  ["Kia", "https://cdn.simpleicons.org/kia/073B78"],
-  ["Hyundai", "https://cdn.simpleicons.org/hyundai/073B78"],
-  ["MG", "https://cdn.simpleicons.org/mg/073B78"],
-  ["Geely", "https://cdn.simpleicons.org/geely/073B78"],
-  ["Toyota", "https://cdn.simpleicons.org/toyota/073B78"],
+  ["Renault", "https://cdn.simpleicons.org/renault/ffffff"],
+  ["Dacia", "https://cdn.simpleicons.org/dacia/ffffff"],
+  ["Opel", "https://cdn.simpleicons.org/opel/ffffff"],
+  ["Geely", "https://cdn.simpleicons.org/geely/ffffff"],
+  ["MG", "https://cdn.simpleicons.org/mg/ffffff"],
+  ["Fiat", "https://cdn.simpleicons.org/fiat/ffffff"],
+  ["Volkswagen", "https://cdn.simpleicons.org/volkswagen/ffffff"],
+  ["Audi", "https://cdn.simpleicons.org/audi/ffffff"],
+  ["Kia", "https://cdn.simpleicons.org/kia/ffffff"],
+  ["Hyundai", "https://cdn.simpleicons.org/hyundai/ffffff"],
+  ["Toyota", "https://cdn.simpleicons.org/toyota/ffffff"],
+  ["Peugeot", "https://cdn.simpleicons.org/peugeot/ffffff"],
 ];
+
+const fallbackCar = "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&w=900&q=82";
 
 const vehicles: Vehicle[] = [
   {
     name: "Renault Clio",
     category: "Mobilite urbaine",
-    tag: "Commercial",
-    image: "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&w=900&q=80",
-    seats: "5 places",
-    use: "Visites client, ville, equipe terrain",
+    activity: "Location des vehicules",
+    image: "https://commons.wikimedia.org/wiki/Special:FilePath/2013%20Renault%20Clio%20IV%20Dynamique%20(1).jpg",
+    fallback: fallbackCar,
+    desc: "Citadine ideale pour les commerciaux, missions urbaines et deplacements quotidiens.",
+  },
+  {
+    name: "Renault Symbol",
+    category: "Mobilite urbaine",
+    activity: "Location des vehicules",
+    image: "https://images.unsplash.com/photo-1550355291-bbee04a92027?auto=format&fit=crop&w=900&q=82",
+    fallback: fallbackCar,
+    desc: "Berline compacte economique pour parc entreprise et deplacements administratifs.",
   },
   {
     name: "Dacia Stepway",
     category: "Mobilite urbaine",
-    tag: "Economique",
-    image: "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=900&q=80",
-    seats: "5 places",
-    use: "Deplacements mixtes et trajets regionaux",
+    activity: "Location des vehicules",
+    image: "https://commons.wikimedia.org/wiki/Special:FilePath/Dacia%20Sandero%20(II)%20Stepway%202017%20(facelift).jpg",
+    fallback: "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=900&q=82",
+    desc: "Polyvalente, robuste et adaptee aux trajets mixtes ville-route.",
   },
   {
     name: "Opel Astra",
     category: "Management et cadres",
-    tag: "Confort",
-    image: "https://images.unsplash.com/photo-1494976388531-d1058494cdd8?auto=format&fit=crop&w=900&q=80",
-    seats: "5 places",
-    use: "Managers, responsables et cadres mobiles",
+    activity: "Location des vehicules",
+    image: "https://commons.wikimedia.org/wiki/Special:FilePath/Opel%20Astra%201.6%20CDTI%20ecoFLEX%20Dynamic%20(K)%20%E2%80%93%20Frontansicht%2C%2023.%20Juni%202016%2C%20D%C3%BCsseldorf.jpg",
+    fallback: "https://images.unsplash.com/photo-1494976388531-d1058494cdd8?auto=format&fit=crop&w=900&q=82",
+    desc: "Confort et image professionnelle pour managers et responsables.",
   },
   {
-    name: "MG5 / Fiat Tipo",
+    name: "Geely Emgrand",
     category: "Management et cadres",
-    tag: "Berline",
-    image: "https://images.unsplash.com/photo-1511919884226-fd3cad34687c?auto=format&fit=crop&w=900&q=80",
-    seats: "5 places",
-    use: "Route, missions longues, image corporate",
+    activity: "Location des vehicules",
+    image: "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=900&q=82",
+    fallback: fallbackCar,
+    desc: "Berline de representation pour trajets cadres et visites clients.",
   },
   {
-    name: "VW Passat / Audi",
-    category: "Direction et prestige",
-    tag: "Premium",
-    image: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=900&q=80",
-    seats: "5 places",
-    use: "Direction, accueil partenaires, representation",
+    name: "MG5",
+    category: "Management et cadres",
+    activity: "Location des vehicules",
+    image: "https://images.unsplash.com/photo-1511919884226-fd3cad34687c?auto=format&fit=crop&w=900&q=82",
+    fallback: fallbackCar,
+    desc: "Berline confortable pour missions longues et parc direction operationnelle.",
   },
   {
-    name: "Kia Sportage / Tucson",
+    name: "Fiat Tipo",
+    category: "Management et cadres",
+    activity: "Location des vehicules",
+    image: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=900&q=82",
+    fallback: fallbackCar,
+    desc: "Solution sobre et efficace pour collaborateurs mobiles.",
+  },
+  {
+    name: "Doblo panorama vitre",
+    category: "Management et cadres",
+    activity: "Location des vehicules",
+    image: "https://commons.wikimedia.org/wiki/Special:FilePath/Fiat%20Doblo%20Cargo%20MTP07.jpg",
+    fallback: "https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?auto=format&fit=crop&w=900&q=82",
+    desc: "Volume et confort pour equipes, navettes et besoins mixtes.",
+  },
+  {
+    name: "VW Passat",
     category: "Direction et prestige",
-    tag: "SUV",
-    image: "https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?auto=format&fit=crop&w=900&q=80",
-    seats: "5 places",
-    use: "Direction, sites, routes longues",
+    activity: "Location des vehicules",
+    image: "https://commons.wikimedia.org/wiki/Special:FilePath/VW%20Passat%20B8%20Limousine%202.0%20TDI%20Highline.JPG",
+    fallback: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=900&q=82",
+    desc: "Berline premium pour direction et representation.",
+  },
+  {
+    name: "Audi / Golf",
+    category: "Direction et prestige",
+    activity: "Location des vehicules",
+    image: "https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?auto=format&fit=crop&w=900&q=82",
+    fallback: fallbackCar,
+    desc: "Image premium, confort et polyvalence pour dirigeants.",
+  },
+  {
+    name: "Kia Sportage",
+    category: "Direction et prestige",
+    activity: "Location des vehicules",
+    image: "https://commons.wikimedia.org/wiki/Special:FilePath/2018%20Kia%20Sportage%20GT-Line%20S%20CRDi%20Automatic%202.0%20Front.jpg",
+    fallback: "https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?auto=format&fit=crop&w=900&q=82",
+    desc: "SUV de standing pour routes longues et visites terrain.",
+  },
+  {
+    name: "Hyundai Tucson",
+    category: "Direction et prestige",
+    activity: "Location des vehicules",
+    image: "https://commons.wikimedia.org/wiki/Special:FilePath/Hyundai%20Tucson%20front.jpg",
+    fallback: "https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?auto=format&fit=crop&w=900&q=82",
+    desc: "SUV confortable pour direction, sites et partenaires.",
   },
   {
     name: "Renault Kangoo",
     category: "Utilitaire et logistique",
-    tag: "Utilitaire",
-    image: "https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?auto=format&fit=crop&w=900&q=80",
-    seats: "2-5 places",
-    use: "Intervention, livraison, maintenance",
+    activity: "Location des vehicules",
+    image: "https://commons.wikimedia.org/wiki/Special:FilePath/Renault%20Kangoo%20front%2020071212.jpg",
+    fallback: "https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?auto=format&fit=crop&w=900&q=82",
+    desc: "Utilitaire compact pour maintenance, intervention et livraison.",
   },
   {
-    name: "Pick-up / Doblo",
+    name: "Fiat Doblo",
     category: "Utilitaire et logistique",
-    tag: "Terrain",
-    image: "https://images.unsplash.com/photo-1591768793355-74d04bb6608f?auto=format&fit=crop&w=900&q=80",
-    seats: "2-5 places",
-    use: "Logistique, sites industriels, chantiers",
+    activity: "Location des vehicules",
+    image: "https://commons.wikimedia.org/wiki/Special:FilePath/Fiat%20Doblo%20Cargo%20MTP07.jpg",
+    fallback: "https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?auto=format&fit=crop&w=900&q=82",
+    desc: "Volume utile pour logistique urbaine et transport professionnel.",
+  },
+  {
+    name: "Pick-up",
+    category: "Utilitaire et logistique",
+    activity: "Location des vehicules",
+    image: "https://images.unsplash.com/photo-1591768793355-74d04bb6608f?auto=format&fit=crop&w=900&q=82",
+    fallback: "https://images.unsplash.com/photo-1591768793355-74d04bb6608f?auto=format&fit=crop&w=900&q=82",
+    desc: "Vehicule robuste pour sites, chantiers et zones difficiles.",
   },
   {
     name: "Motos de livraison",
-    category: "Motos professionnelles",
-    tag: "Livraison",
-    image: "https://images.unsplash.com/photo-1558981806-ec527fa84c39?auto=format&fit=crop&w=900&q=80",
-    seats: "1-2 places",
-    use: "Livraison rapide et mobilite urbaine",
+    category: "Motos",
+    activity: "Location des Motos",
+    image: "https://images.unsplash.com/photo-1558981806-ec527fa84c39?auto=format&fit=crop&w=900&q=82",
+    fallback: "https://images.unsplash.com/photo-1558981806-ec527fa84c39?auto=format&fit=crop&w=900&q=82",
+    desc: "Motos standard et livraison rapide pour mobilite urbaine.",
+  },
+  {
+    name: "Bus et mini-bus",
+    category: "Materiel roulant",
+    activity: "Location tout materiels roulant",
+    image: "https://images.unsplash.com/photo-1570125909232-eb263c188f7e?auto=format&fit=crop&w=900&q=82",
+    fallback: "https://images.unsplash.com/photo-1570125909232-eb263c188f7e?auto=format&fit=crop&w=900&q=82",
+    desc: "Transport du personnel, navettes et missions groupe.",
+  },
+  {
+    name: "Camions et engins TP",
+    category: "Materiel roulant",
+    activity: "Location tout materiels roulant",
+    image: "https://images.unsplash.com/photo-1581093458791-9d09cc251b7a?auto=format&fit=crop&w=900&q=82",
+    fallback: "https://images.unsplash.com/photo-1581093458791-9d09cc251b7a?auto=format&fit=crop&w=900&q=82",
+    desc: "Camions, engins travaux publics et materiel roulant operationnel.",
+  },
+  {
+    name: "Vehicules a la vente",
+    category: "Vente",
+    activity: "Vente tout type de vehicule avec facturation",
+    image: "https://images.unsplash.com/photo-1562141961-9a85d0197a60?auto=format&fit=crop&w=900&q=82",
+    fallback: fallbackCar,
+    desc: "Vente de tout type de vehicule avec facturation et dossier administratif.",
   },
 ];
 
-const services = [
-  ["Location LLD / LMD", "Contrats longs ou moyens termes pour voitures touristiques, utilitaires et pick-up."],
-  ["Materiel roulant", "Bus, mini-bus, camions et engins TP pour les besoins d'exploitation."],
-  ["Motos professionnelles", "Motos standard et motos de livraison pour les equipes mobiles."],
-  ["Vente avec facturation", "Vente de vehicules avec dossier administratif et facturation claire."],
-  ["Maintenance auto", "Entretien, suivi technique et pieces de rechange pour garder le parc disponible."],
+const primaryActivities = [
+  ["Location des vehicules", "LLD ou LMD : touristique, utilitaire, pick-up et vehicules entreprise."],
+  ["Location tout materiels roulant", "Bus, mini-bus, engins travaux publics et camions."],
+  ["Location des Motos", "Motos standard et motos de livraison pour vos equipes terrain."],
+  ["Vente tout type de vehicule", "Vente avec facturation et accompagnement administratif."],
+];
+
+const secondaryActivities = [
+  ["Maintenance Auto", "Entretien, revision, diagnostic et suivi technique du parc."],
+  ["Vente piece de rechange", "Approvisionnement de pieces pour limiter l'immobilisation."],
+  ["Suivi de disponibilite", "Organisation des interventions et priorisation des vehicules critiques."],
 ];
 
 function getPageFromHash(): Page {
   const value = window.location.hash.replace("#/", "").split("?")[0] || "accueil";
-  return ["accueil", "vehicules", "services", "marques", "contact"].includes(value)
-    ? (value as Page)
-    : "accueil";
+  return ["accueil", "flotte", "secondaire", "apropos", "contact"].includes(value) ? (value as Page) : "accueil";
 }
 
-function GlassAction({
-  children,
-  onClick,
-  variant = "primary",
-}: {
-  children: React.ReactNode;
-  onClick: () => void;
-  variant?: "primary" | "light";
-}) {
+function GlassButton({ children, onClick, variant = "primary" }: { children: React.ReactNode; onClick: () => void; variant?: "primary" | "light" }) {
   return (
     <span className="liquid-button-wrap">
       <LiquidGlass
         className={`liquid-action ${variant}`}
-        displacementScale={38}
+        displacementScale={42}
         blurAmount={0.08}
-        saturation={135}
-        aberrationIntensity={1.1}
-        elasticity={0.22}
-        cornerRadius={999}
-        padding="12px 18px"
+        saturation={145}
+        aberrationIntensity={1.2}
+        elasticity={0.24}
+        cornerRadius={10}
+        padding="13px 18px"
         onClick={onClick}
       >
         <span>{children}</span>
@@ -151,47 +241,52 @@ function GlassAction({
 }
 
 function AppHeader({ page, go }: { page: Page; go: (page: Page) => void }) {
-  const nav: Array<[Page, string]> = [
+  const links: Array<[Page, string]> = [
     ["accueil", "Accueil"],
-    ["vehicules", "Vehicules"],
-    ["services", "Services"],
-    ["marques", "Marques"],
+    ["flotte", "La flotte"],
+    ["secondaire", "Maintenance"],
+    ["apropos", "A Propos"],
     ["contact", "Contact"],
   ];
 
   return (
-    <header className="site-header">
-      <button className="brand" type="button" onClick={() => go("accueil")} aria-label="Accueil LCH Auto">
-        <img src={logoUrl} alt="EURL LCH Automotive Fleet" />
-      </button>
-      <nav aria-label="Navigation principale">
-        {nav.map(([id, label]) => (
-          <button className={page === id ? "active" : ""} key={id} type="button" onClick={() => go(id)}>
-            {label}
-          </button>
-        ))}
-      </nav>
-      <button className="header-cta" type="button" onClick={() => go("contact")}>
-        Devis flotte
-      </button>
-    </header>
+    <>
+      <div className="topbar">
+        <div>
+          <span>Tel : +213 000 00 00 00</span>
+          <span>contact@locationlch.dz</span>
+        </div>
+        <strong>Partenaire des entreprises en gestion de mobilite</strong>
+      </div>
+      <header className="site-header">
+        <button className="brand" type="button" onClick={() => go("accueil")} aria-label="Accueil LCH Auto">
+          <img src={logoUrl} alt="EURL LCH Automotive Fleet" />
+        </button>
+        <nav aria-label="Navigation principale">
+          {links.map(([id, label]) => (
+            <button className={page === id ? "active" : ""} key={id} type="button" onClick={() => go(id)}>
+              {label}
+            </button>
+          ))}
+        </nav>
+        <button className="header-cta" type="button" onClick={() => go("contact")}>Demander un devis</button>
+      </header>
+    </>
   );
 }
 
-function BrandMarquee() {
-  const logos = [...brandLogos, ...brandLogos];
-
+function BrandMarquee({ dark = false }: { dark?: boolean }) {
   return (
-    <section className="brand-strip" aria-label="Marques disponibles">
-      <div className="brand-strip-head">
+    <section className={`brand-marquee ${dark ? "dark" : ""}`}>
+      <div className="brand-marquee-title">
         <span>Marques disponibles</span>
-        <strong>Tourisme, prestige, utilitaire et livraison</strong>
+        <strong>Renault, Dacia, Opel, Geely, MG, Fiat, VW, Audi, Kia, Hyundai...</strong>
       </div>
-      <div className="marquee">
+      <div className="marquee-window">
         <div className="marquee-track">
-          {logos.map(([name, logo], index) => (
+          {[...brandLogos, ...brandLogos].map(([name, src], index) => (
             <div className="brand-chip" key={`${name}-${index}`}>
-              <img src={logo} alt={`Logo ${name}`} loading="lazy" />
+              <img src={src} alt={`Logo ${name}`} loading="lazy" />
               <span>{name}</span>
             </div>
           ))}
@@ -202,65 +297,115 @@ function BrandMarquee() {
 }
 
 function Hero({ go }: { go: (page: Page) => void }) {
+  const [slide, setSlide] = useState(0);
+
+  useEffect(() => {
+    const timer = window.setInterval(() => setSlide((current) => (current + 1) % heroSlides.length), 6500);
+    return () => window.clearInterval(timer);
+  }, []);
+
   return (
     <section className="hero">
-      <img className="hero-photo" src={heroImage} alt="Vehicule professionnel LCH Auto en circulation" />
+      {heroSlides.map((item, index) => (
+        <img className={`hero-photo ${slide === index ? "active" : ""}`} src={item.image} alt={item.title} key={item.image} />
+      ))}
       <div className="hero-overlay" />
-      <div className="hero-content">
-        <div className="hero-card">
+      <div className="hero-inner">
+        <div className="hero-copy">
           <span className="eyebrow">EURL LCH Automotive Fleet</span>
-          <h1>Location et gestion de flotte pour entreprises.</h1>
-          <p>
-            LLD, LMD, utilitaires, pick-up, motos, bus, mini-bus et materiel roulant. Une flotte
-            organisee pour que votre mobilite devienne un levier de performance.
-          </p>
+          <h1>{heroSlides[slide].title}</h1>
+          <p>Concentrez-vous sur votre coeur de metier, nous faisons de votre mobilite un levier de performance.</p>
           <div className="hero-actions">
-            <GlassAction onClick={() => go("vehicules")}>Voir les vehicules</GlassAction>
-            <GlassAction onClick={() => go("contact")} variant="light">Demander un devis</GlassAction>
+            <GlassButton onClick={() => go("flotte")}>Voir la flotte</GlassButton>
+            <GlassButton onClick={() => go("contact")} variant="light">Demander un devis</GlassButton>
           </div>
         </div>
+        <div className="hero-panel glass-pro">
+          <span>Offre entreprise</span>
+          <strong>LLD / LMD / Vente / Maintenance</strong>
+          <p>Vehicules touristiques, utilitaires, motos, bus, mini-bus, camions et engins TP.</p>
+        </div>
+      </div>
+      <div className="hero-dots">
+        {heroSlides.map((item, index) => (
+          <button key={item.image} className={slide === index ? "active" : ""} type="button" onClick={() => setSlide(index)} aria-label={`Slide ${index + 1}`} />
+        ))}
       </div>
     </section>
   );
 }
 
-function VehicleGrid({ limit }: { limit?: number }) {
-  const [category, setCategory] = useState("Tous");
-  const categories = ["Tous", ...Array.from(new Set(vehicles.map((vehicle) => vehicle.category)))];
-  const visible = useMemo(() => {
-    const filtered = category === "Tous" ? vehicles : vehicles.filter((vehicle) => vehicle.category === category);
-    return typeof limit === "number" ? filtered.slice(0, limit) : filtered;
-  }, [category, limit]);
+function Activities({ go }: { go: (page: Page) => void }) {
+  return (
+    <section className="section activities">
+      <div className="section-head">
+        <span className="eyebrow blue">Activite principale</span>
+        <h2>Une offre claire pour les entreprises.</h2>
+      </div>
+      <div className="activity-grid">
+        {primaryActivities.map(([title, text], index) => (
+          <article key={title}>
+            <span>{String(index + 1).padStart(2, "0")}</span>
+            <h3>{title}</h3>
+            <p>{text}</p>
+          </article>
+        ))}
+      </div>
+      <div className="activity-cta">
+        <p>La maintenance et les pieces de rechange sont traitees dans une page separee pour clarifier l'activite secondaire.</p>
+        <button type="button" onClick={() => go("secondaire")}>Voir activite secondaire</button>
+      </div>
+    </section>
+  );
+}
+
+function VehicleCard({ vehicle }: { vehicle: Vehicle }) {
+  return (
+    <article className="vehicle-card">
+      <img
+        src={vehicle.image}
+        alt={vehicle.name}
+        loading="lazy"
+        onError={(event) => {
+          event.currentTarget.src = vehicle.fallback;
+        }}
+      />
+      <div className="vehicle-info">
+        <span>{vehicle.category}</span>
+        <h3>{vehicle.name}</h3>
+        <p>{vehicle.desc}</p>
+        <strong>{vehicle.activity}</strong>
+      </div>
+    </article>
+  );
+}
+
+function FleetSection({ preview = false }: { preview?: boolean }) {
+  const [filter, setFilter] = useState("Tous");
+  const filters = ["Tous", ...Array.from(new Set(vehicles.map((item) => item.category)))];
+  const filtered = useMemo(() => {
+    const list = filter === "Tous" ? vehicles : vehicles.filter((item) => item.category === filter);
+    return preview ? list.slice(0, 8) : list;
+  }, [filter, preview]);
 
   return (
-    <section className="section vehicle-section">
-      <div className="section-heading split">
+    <section className="section fleet-zone">
+      <div className="section-head split">
         <div>
-          <span className="eyebrow blue">Vehicules disponibles</span>
-          <h2>Un catalogue clair par usage entreprise.</h2>
+          <span className="eyebrow blue">Gamme vehicules</span>
+          <h2>Vehicules disponibles avec filtres par categorie.</h2>
         </div>
-        <div className="filters" aria-label="Filtre categories vehicules">
-          {categories.map((item) => (
-            <button className={category === item ? "active" : ""} key={item} type="button" onClick={() => setCategory(item)}>
+        <div className="fleet-filters">
+          {filters.map((item) => (
+            <button className={filter === item ? "active" : ""} key={item} type="button" onClick={() => setFilter(item)}>
               {item}
             </button>
           ))}
         </div>
       </div>
       <div className="vehicle-grid">
-        {visible.map((vehicle) => (
-          <article className="vehicle-card" key={vehicle.name}>
-            <img src={vehicle.image} alt={vehicle.name} loading="lazy" />
-            <div className="vehicle-body">
-              <span>{vehicle.category}</span>
-              <h3>{vehicle.name}</h3>
-              <p>{vehicle.use}</p>
-              <div className="vehicle-meta">
-                <strong>{vehicle.tag}</strong>
-                <strong>{vehicle.seats}</strong>
-              </div>
-            </div>
-          </article>
+        {filtered.map((vehicle) => (
+          <VehicleCard key={`${vehicle.name}-${vehicle.category}`} vehicle={vehicle} />
         ))}
       </div>
     </section>
@@ -271,108 +416,135 @@ function HomePage({ go }: { go: (page: Page) => void }) {
   return (
     <>
       <Hero go={go} />
-      <BrandMarquee />
-      <section className="section intro-grid">
-        {[
-          ["LLD / LMD", "Contrats adaptes aux cycles d'exploitation."],
-          ["Parc multi-gammes", "Citadines, cadres, prestige, utilitaires, motos."],
-          ["Suivi technique", "Maintenance auto et pieces de rechange."],
-        ].map(([title, text]) => (
-          <article key={title}>
-            <span>{title}</span>
-            <p>{text}</p>
-          </article>
-        ))}
-      </section>
-      <VehicleGrid limit={6} />
-      <section className="section cta-band">
-        <h2>Une flotte a mettre en place rapidement ?</h2>
-        <button type="button" onClick={() => go("contact")}>Parler a LCH Auto</button>
+      <BrandMarquee dark />
+      <Activities go={go} />
+      <FleetSection preview />
+      <section className="section about-preview">
+        <div>
+          <span className="eyebrow blue">Pourquoi LCH Auto</span>
+          <h2>Un partenaire flotte, pas seulement un loueur.</h2>
+        </div>
+        <p>
+          LCH Auto accompagne les entreprises dans la mise a disposition, la gestion et le suivi de leur
+          mobilite : contrats LLD/LMD, parc multi-gammes, maintenance, pieces et vente avec facturation.
+        </p>
+        <button type="button" onClick={() => go("apropos")}>Decouvrir l'entreprise</button>
       </section>
     </>
   );
 }
 
-function ServicesPage() {
+function FleetPage() {
   return (
-    <section className="page-shell">
+    <main className="page">
       <div className="page-title">
-        <span className="eyebrow blue">Services</span>
-        <h1>Location, vente, maintenance et gestion operationnelle.</h1>
+        <span className="eyebrow blue">La flotte LCH Auto</span>
+        <h1>Citadines, cadres, prestige, utilitaires, motos et materiel roulant.</h1>
       </div>
-      <div className="service-list">
-        {services.map(([title, text], index) => (
-          <article key={title}>
-            <span>{String(index + 1).padStart(2, "0")}</span>
-            <div>
-              <h3>{title}</h3>
-              <p>{text}</p>
-            </div>
-          </article>
-        ))}
-      </div>
-    </section>
+      <FleetSection />
+    </main>
   );
 }
 
-function BrandsPage() {
+function SecondaryPage() {
   return (
-    <section className="page-shell">
+    <main className="page">
       <div className="page-title">
-        <span className="eyebrow blue">Marques</span>
-        <h1>Des marques reconnues pour chaque niveau de mobilite.</h1>
+        <span className="eyebrow blue">Activite secondaire</span>
+        <h1>Maintenance Auto et vente piece de rechange.</h1>
+        <p>Une flotte performante depend de la disponibilite. LCH Auto structure le suivi technique et l'approvisionnement.</p>
       </div>
-      <BrandMarquee />
-      <div className="brand-grid">
-        {brandLogos.map(([name, logo]) => (
-          <article key={name}>
-            <img src={logo} alt={`Logo ${name}`} loading="lazy" />
-            <strong>{name}</strong>
+      <section className="section secondary-grid">
+        {secondaryActivities.map(([title, text]) => (
+          <article key={title}>
+            <h3>{title}</h3>
+            <p>{text}</p>
           </article>
         ))}
+      </section>
+    </main>
+  );
+}
+
+function AboutPage() {
+  return (
+    <main className="page">
+      <div className="page-title">
+        <span className="eyebrow blue">A propos</span>
+        <h1>EURL LCH Automotive Fleet, sigle LCH Auto.</h1>
+        <p>
+          Nous aidons les entreprises a externaliser leur mobilite pour se concentrer sur leur coeur de metier.
+          Notre role : selectionner, fournir, suivre et maintenir les moyens roulants adaptes a chaque mission.
+        </p>
       </div>
-    </section>
+      <BrandMarquee />
+    </main>
   );
 }
 
 function ContactPage() {
-  const [need, setNeed] = useState("Location LLD / LMD");
-
   return (
-    <section className="page-shell contact-page">
+    <main className="page contact-page">
       <div className="page-title">
-        <span className="eyebrow blue">Contact commercial</span>
-        <h1>Construisons votre prochaine flotte.</h1>
-        <p>
-          Indiquez le nombre de vehicules, la duree, la categorie souhaitee et le niveau de maintenance attendu.
-        </p>
+        <span className="eyebrow blue">Contact</span>
+        <h1>Demander une proposition flotte.</h1>
+        <p>Precisez la categorie, la duree, le nombre de vehicules et le niveau de service attendu.</p>
       </div>
       <form className="contact-form">
-        <label>
-          Nom de l'entreprise
-          <input type="text" placeholder="Votre societe" />
-        </label>
-        <label>
-          Besoin principal
-          <select value={need} onChange={(event) => setNeed(event.target.value)}>
-            <option>Location LLD / LMD</option>
-            <option>Utilitaires et logistique</option>
-            <option>Motos de livraison</option>
-            <option>Vente de vehicules</option>
-            <option>Maintenance et pieces</option>
-          </select>
-        </label>
-        <div className="form-summary">
-          <span>Demande preparee</span>
-          <strong>{need}</strong>
-        </div>
-        <label>
-          Message
-          <textarea rows={5} placeholder="Nombre de vehicules, duree, type de flotte..." />
-        </label>
+        <label>Nom de l'entreprise<input placeholder="Votre societe" /></label>
+        <label>Telephone<input placeholder="+213 ..." /></label>
+        <label>Besoin<select><option>Location des vehicules LLD / LMD</option><option>Materiel roulant</option><option>Motos</option><option>Vente avec facturation</option><option>Maintenance et pieces</option></select></label>
+        <label>Message<textarea rows={5} placeholder="Nombre de vehicules, categorie, duree..." /></label>
         <button type="button">Envoyer la demande</button>
       </form>
-    </section>
+    </main>
+  );
+}
+
+function SiteFooter({ go }: { go: (page: Page) => void }) {
+  const year = new Date().getFullYear();
+
+  return (
+    <footer className="site-footer">
+      <div className="footer-brands">
+        <p>Marques disponibles</p>
+        <div>
+          {brandLogos.slice(0, 10).map(([name, src]) => (
+            <img src={src} alt={name} key={name} loading="lazy" />
+          ))}
+        </div>
+      </div>
+      <div className="footer-main">
+        <div>
+          <img src={logoUrl} alt="LCH Auto" />
+          <p>Partenaire des entreprises en location, vente, maintenance et gestion de flotte.</p>
+        </div>
+        <div>
+          <h4>Navigation</h4>
+          <button onClick={() => go("accueil")}>Accueil</button>
+          <button onClick={() => go("flotte")}>La flotte</button>
+          <button onClick={() => go("secondaire")}>Maintenance</button>
+          <button onClick={() => go("apropos")}>A propos</button>
+        </div>
+        <div>
+          <h4>Activites</h4>
+          <span>Location des vehicules</span>
+          <span>Location materiel roulant</span>
+          <span>Location des motos</span>
+          <span>Vente avec facturation</span>
+        </div>
+        <div>
+          <h4>Contact</h4>
+          <span>Algerie</span>
+          <span>+213 000 00 00 00</span>
+          <span>contact@locationlch.dz</span>
+        </div>
+      </div>
+      <div className="footer-bottom">
+        <span>© {year} LCH Auto. Tous droits reserves.</span>
+        <span>EURL LCH Automotive Fleet</span>
+      </div>
+    </footer>
   );
 }
 
@@ -394,18 +566,12 @@ export default function App() {
   return (
     <>
       <AppHeader page={page} go={go} />
-      <main>
-        {page === "accueil" && <HomePage go={go} />}
-        {page === "vehicules" && <VehicleGrid />}
-        {page === "services" && <ServicesPage />}
-        {page === "marques" && <BrandsPage />}
-        {page === "contact" && <ContactPage />}
-      </main>
-      <footer>
-        <strong>LCH Auto</strong>
-        <span>EURL LCH Automotive Fleet - Location, vente, maintenance et gestion de flotte.</span>
-        <button type="button" onClick={() => go("accueil")}>Retour accueil</button>
-      </footer>
+      {page === "accueil" && <HomePage go={go} />}
+      {page === "flotte" && <FleetPage />}
+      {page === "secondaire" && <SecondaryPage />}
+      {page === "apropos" && <AboutPage />}
+      {page === "contact" && <ContactPage />}
+      <SiteFooter go={go} />
     </>
   );
 }
