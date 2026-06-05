@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://lch-automotive.com/sitemap.xml
