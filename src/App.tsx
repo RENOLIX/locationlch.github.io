@@ -46,6 +46,30 @@ const brandLogos = [
   ["Peugeot", "https://cdn.simpleicons.org/peugeot/ffffff"],
 ];
 
+const vehicleBrandLogos: Record<string, string> = {
+  ...Object.fromEntries(brandLogos),
+  "Mercedes-Benz": "https://cdn.simpleicons.org/mercedesbenz/ffffff",
+  Yamaha: "https://cdn.simpleicons.org/yamaha/ffffff",
+  "LCH Auto": logoUrl,
+};
+
+function vehicleBrand(name: string) {
+  if (name.includes("Renault")) return "Renault";
+  if (name.includes("Dacia")) return "Dacia";
+  if (name.includes("Opel")) return "Opel";
+  if (name.includes("Geely")) return "Geely";
+  if (name.includes("MG")) return "MG";
+  if (name.includes("Fiat") || name.includes("Doblo")) return "Fiat";
+  if (name.includes("VW") || name.includes("Golf")) return "Volkswagen";
+  if (name.includes("Audi")) return "Audi";
+  if (name.includes("Kia")) return "Kia";
+  if (name.includes("Hyundai")) return "Hyundai";
+  if (name.includes("Pick-up")) return "Toyota";
+  if (name.includes("Motos")) return "Yamaha";
+  if (name.includes("Bus") || name.includes("Camions")) return "Mercedes-Benz";
+  return "LCH Auto";
+}
+
 const fallbackCar = "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&w=900&q=82";
 
 const vehicles: Vehicle[] = [
@@ -349,6 +373,19 @@ function Hero({ go }: { go: (page: Page) => void }) {
   );
 }
 
+function PageBanner({ eyebrow, title, image }: { eyebrow: string; title: string; image: string }) {
+  return (
+    <section className="page-banner">
+      <img src={image} alt="" aria-hidden="true" />
+      <div className="page-banner-overlay" />
+      <div className="page-banner-inner">
+        <span>{eyebrow}</span>
+        <h1>{title}</h1>
+      </div>
+    </section>
+  );
+}
+
 function Activities({ go }: { go: (page: Page) => void }) {
   return (
     <section className="section activities">
@@ -383,16 +420,25 @@ function Activities({ go }: { go: (page: Page) => void }) {
 }
 
 function VehicleCard({ vehicle }: { vehicle: Vehicle }) {
+  const brand = vehicleBrand(vehicle.name);
+  const src = vehicleBrandLogos[brand] || logoUrl;
+  const brandClass = brand.toLowerCase().replace(/[^a-z0-9]/g, "");
+
   return (
     <article className="vehicle-card">
-      <img
-        src={vehicle.image}
-        alt={vehicle.name}
-        loading="lazy"
-        onError={(event) => {
-          event.currentTarget.src = vehicle.fallback;
-        }}
-      />
+      <div className="vehicle-logo-panel">
+        <img
+          className={`vehicle-brand-logo brand-${brandClass}`}
+          src={src}
+          alt={`Logo ${brand}`}
+          loading="lazy"
+          onError={(event) => {
+            event.currentTarget.style.display = "none";
+            event.currentTarget.parentElement?.classList.add("logo-missing");
+          }}
+        />
+        <strong>{brand}</strong>
+      </div>
       <div className="vehicle-info">
         <span>{vehicle.category}</span>
         <h3>{vehicle.name}</h3>
@@ -459,12 +505,12 @@ function HomePage({ go }: { go: (page: Page) => void }) {
 
 function FleetPage() {
   return (
-    <main className="page">
-      <div className="page-title">
-        <span className="eyebrow blue">La flotte LCH Auto</span>
-        <h1>Citadines, cadres, prestige, utilitaires, motos et materiel roulant.</h1>
+    <>
+      <PageBanner eyebrow="La flotte LCH Auto" title="Citadines, cadres, prestige, utilitaires, motos et materiel roulant." image={heroSlides[1].image} />
+      <main className="page">
+        <div className="page-title compact-title">
         <p>Filtrez par gamme et consultez les modeles disponibles pour LLD, LMD, vente avec facturation ou mission operationnelle.</p>
-      </div>
+        </div>
       <section className="page-intro-grid">
         <article>
           <span>01</span>
@@ -483,18 +529,19 @@ function FleetPage() {
         </article>
       </section>
       <FleetSection />
-    </main>
+      </main>
+    </>
   );
 }
 
 function SecondaryPage() {
   return (
-    <main className="page">
-      <div className="page-title">
-        <span className="eyebrow blue">Activite secondaire</span>
-        <h1>Maintenance Auto et vente piece de rechange.</h1>
+    <>
+      <PageBanner eyebrow="Activite secondaire" title="Maintenance Auto et vente piece de rechange." image={heroSlides[2].image} />
+      <main className="page">
+        <div className="page-title compact-title">
         <p>Une flotte performante depend de la disponibilite. LCH Auto structure le suivi technique et l'approvisionnement.</p>
-      </div>
+        </div>
       <section className="section secondary-grid">
         {secondaryActivities.map(([title, text]) => (
           <article key={title}>
@@ -515,17 +562,18 @@ function SecondaryPage() {
           <li><strong>Suivi</strong><span>Historique, disponibilite et priorisation des vehicules critiques.</span></li>
         </ol>
       </section>
-    </main>
+      </main>
+    </>
   );
 }
 
 function AboutPage() {
   return (
-    <main className="page">
+    <>
+      <PageBanner eyebrow="A propos" title="EURL LCH Automotive Fleet, sigle LCH Auto." image={aboutFleetImage} />
+      <main className="page">
       <section className="about-hero">
         <div className="page-title">
-          <span className="eyebrow blue">A propos</span>
-          <h1>EURL LCH Automotive Fleet, sigle LCH Auto.</h1>
           <p>
             LCH Auto accompagne les entreprises dans la gestion de leur mobilite professionnelle avec une offre
             complete : location longue duree, location moyenne duree, mise a disposition de vehicules, vente avec
@@ -570,18 +618,19 @@ function AboutPage() {
         </ol>
       </section>
       <BrandMarquee />
-    </main>
+      </main>
+    </>
   );
 }
 
 function ContactPage() {
   return (
-    <main className="page contact-page">
-      <div className="page-title">
-        <span className="eyebrow blue">Contact</span>
-        <h1>Demander une proposition flotte.</h1>
+    <>
+      <PageBanner eyebrow="Contact" title="Demander une proposition flotte." image={heroSlides[0].image} />
+      <main className="page contact-page">
+        <div className="page-title compact-title">
         <p>Precisez la categorie, la duree, le nombre de vehicules et le niveau de service attendu.</p>
-      </div>
+        </div>
       <aside className="contact-panel">
         <h3>Informations utiles</h3>
         <p>Pour une reponse precise, indiquez la gamme, la quantite, la duree souhaitee, la ville et le type d'utilisation.</p>
@@ -596,7 +645,8 @@ function ContactPage() {
         <label>Message<textarea rows={5} placeholder="Nombre de vehicules, categorie, duree..." /></label>
         <button type="button">Envoyer la demande</button>
       </form>
-    </main>
+      </main>
+    </>
   );
 }
 
