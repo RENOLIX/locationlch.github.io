@@ -1,5 +1,4 @@
 import { useEffect, useMemo, useState } from "react";
-import LiquidGlass from "liquid-glass-react";
 
 type Page = "accueil" | "flotte" | "secondaire" | "apropos" | "contact";
 
@@ -52,7 +51,7 @@ const vehicles: Vehicle[] = [
     name: "Renault Clio",
     category: "Mobilite urbaine",
     activity: "Location des vehicules",
-    image: "https://commons.wikimedia.org/wiki/Special:FilePath/2013%20Renault%20Clio%20IV%20Dynamique%20(1).jpg",
+    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/Gu%C3%A9rande_-_44350_-_2021.06.16_-_Titi_Floris_-_Renault_Clio_IV_%C2%A9_Anthony_Levrot.jpg/960px-Gu%C3%A9rande_-_44350_-_2021.06.16_-_Titi_Floris_-_Renault_Clio_IV_%C2%A9_Anthony_Levrot.jpg",
     fallback: fallbackCar,
     desc: "Citadine ideale pour les commerciaux, missions urbaines et deplacements quotidiens.",
   },
@@ -60,7 +59,7 @@ const vehicles: Vehicle[] = [
     name: "Renault Symbol",
     category: "Mobilite urbaine",
     activity: "Location des vehicules",
-    image: "https://images.unsplash.com/photo-1550355291-bbee04a92027?auto=format&fit=crop&w=900&q=82",
+    image: "https://commons.wikimedia.org/wiki/Special:FilePath/2021%20Renault%20Symbol%201.6%20Zen.jpg",
     fallback: fallbackCar,
     desc: "Berline compacte economique pour parc entreprise et deplacements administratifs.",
   },
@@ -68,7 +67,7 @@ const vehicles: Vehicle[] = [
     name: "Dacia Stepway",
     category: "Mobilite urbaine",
     activity: "Location des vehicules",
-    image: "https://commons.wikimedia.org/wiki/Special:FilePath/Dacia%20Sandero%20(II)%20Stepway%202017%20(facelift).jpg",
+    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/2023_Dacia_Sandero_Stepway_1.0_tCe_Bi-Fuel_Expression_at_Dacia_Manchester_01.jpg/960px-2023_Dacia_Sandero_Stepway_1.0_tCe_Bi-Fuel_Expression_at_Dacia_Manchester_01.jpg",
     fallback: "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=900&q=82",
     desc: "Polyvalente, robuste et adaptee aux trajets mixtes ville-route.",
   },
@@ -76,7 +75,7 @@ const vehicles: Vehicle[] = [
     name: "Opel Astra",
     category: "Management et cadres",
     activity: "Location des vehicules",
-    image: "https://commons.wikimedia.org/wiki/Special:FilePath/Opel%20Astra%201.6%20CDTI%20ecoFLEX%20Dynamic%20(K)%20%E2%80%93%20Frontansicht%2C%2023.%20Juni%202016%2C%20D%C3%BCsseldorf.jpg",
+    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/004_Car_dyno_testing_-_new_car_test_of_Opel_Astra_K_at_Opel_factory_in_Gliwice%2C_Poland.jpg/960px-004_Car_dyno_testing_-_new_car_test_of_Opel_Astra_K_at_Opel_factory_in_Gliwice%2C_Poland.jpg",
     fallback: "https://images.unsplash.com/photo-1494976388531-d1058494cdd8?auto=format&fit=crop&w=900&q=82",
     desc: "Confort et image professionnelle pour managers et responsables.",
   },
@@ -84,7 +83,7 @@ const vehicles: Vehicle[] = [
     name: "Geely Emgrand",
     category: "Management et cadres",
     activity: "Location des vehicules",
-    image: "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=900&q=82",
+    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Geely_Emgrand_EC7_in_China.jpg/960px-Geely_Emgrand_EC7_in_China.jpg",
     fallback: fallbackCar,
     desc: "Berline de representation pour trajets cadres et visites clients.",
   },
@@ -92,7 +91,7 @@ const vehicles: Vehicle[] = [
     name: "MG5",
     category: "Management et cadres",
     activity: "Location des vehicules",
-    image: "https://images.unsplash.com/photo-1511919884226-fd3cad34687c?auto=format&fit=crop&w=900&q=82",
+    image: "https://commons.wikimedia.org/wiki/Special:FilePath/2020%20SAIC%20MG%205%20%28front%29.jpg",
     fallback: fallbackCar,
     desc: "Berline confortable pour missions longues et parc direction operationnelle.",
   },
@@ -100,7 +99,7 @@ const vehicles: Vehicle[] = [
     name: "Fiat Tipo",
     category: "Management et cadres",
     activity: "Location des vehicules",
-    image: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=900&q=82",
+    image: "https://commons.wikimedia.org/wiki/Special:FilePath/2018%20Fiat%20Tipo%20Hatchback%20Lounge.jpg",
     fallback: fallbackCar,
     desc: "Solution sobre et efficace pour collaborateurs mobiles.",
   },
@@ -116,7 +115,7 @@ const vehicles: Vehicle[] = [
     name: "VW Passat",
     category: "Direction et prestige",
     activity: "Location des vehicules",
-    image: "https://commons.wikimedia.org/wiki/Special:FilePath/VW%20Passat%20B8%20Limousine%202.0%20TDI%20Highline.JPG",
+    image: "https://commons.wikimedia.org/wiki/Special:FilePath/20200603%20Volkswagen%20Passat.jpg",
     fallback: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=900&q=82",
     desc: "Berline premium pour direction et representation.",
   },
@@ -124,7 +123,7 @@ const vehicles: Vehicle[] = [
     name: "Audi / Golf",
     category: "Direction et prestige",
     activity: "Location des vehicules",
-    image: "https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?auto=format&fit=crop&w=900&q=82",
+    image: "https://commons.wikimedia.org/wiki/Special:FilePath/Audi%20A6%20e-tron%20Concept%20001.jpg",
     fallback: fallbackCar,
     desc: "Image premium, confort et polyvalence pour dirigeants.",
   },
@@ -132,7 +131,7 @@ const vehicles: Vehicle[] = [
     name: "Kia Sportage",
     category: "Direction et prestige",
     activity: "Location des vehicules",
-    image: "https://commons.wikimedia.org/wiki/Special:FilePath/2018%20Kia%20Sportage%20GT-Line%20S%20CRDi%20Automatic%202.0%20Front.jpg",
+    image: "https://commons.wikimedia.org/wiki/Special:FilePath/2018%20Kia%20Sportage%20GT-Line%20S%20facelift%20Front.jpg",
     fallback: "https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?auto=format&fit=crop&w=900&q=82",
     desc: "SUV de standing pour routes longues et visites terrain.",
   },
@@ -140,7 +139,7 @@ const vehicles: Vehicle[] = [
     name: "Hyundai Tucson",
     category: "Direction et prestige",
     activity: "Location des vehicules",
-    image: "https://commons.wikimedia.org/wiki/Special:FilePath/Hyundai%20Tucson%20front.jpg",
+    image: "https://commons.wikimedia.org/wiki/Special:FilePath/Hyundai%20Tucson%20Front.JPG",
     fallback: "https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?auto=format&fit=crop&w=900&q=82",
     desc: "SUV confortable pour direction, sites et partenaires.",
   },
@@ -188,8 +187,8 @@ const vehicles: Vehicle[] = [
     name: "Camions et engins TP",
     category: "Materiel roulant",
     activity: "Location tout materiels roulant",
-    image: "https://images.unsplash.com/photo-1581093458791-9d09cc251b7a?auto=format&fit=crop&w=900&q=82",
-    fallback: "https://images.unsplash.com/photo-1581093458791-9d09cc251b7a?auto=format&fit=crop&w=900&q=82",
+    image: "https://commons.wikimedia.org/wiki/Special:FilePath/Big%20heavy%20trucks%20and%20excavator%20machine%20working.jpg",
+    fallback: "https://commons.wikimedia.org/wiki/Special:FilePath/Excavator%205.jpg",
     desc: "Camions, engins travaux publics et materiel roulant operationnel.",
   },
   {
@@ -220,27 +219,8 @@ function getPageFromHash(): Page {
   return ["accueil", "flotte", "secondaire", "apropos", "contact"].includes(value) ? (value as Page) : "accueil";
 }
 
-function GlassButton({ children, onClick, variant = "primary" }: { children: React.ReactNode; onClick: () => void; variant?: "primary" | "light" }) {
-  return (
-    <span className="liquid-button-wrap">
-      <LiquidGlass
-        className={`liquid-action ${variant}`}
-        displacementScale={42}
-        blurAmount={0.08}
-        saturation={145}
-        aberrationIntensity={1.2}
-        elasticity={0.24}
-        cornerRadius={10}
-        padding="13px 18px"
-        onClick={onClick}
-      >
-        <span>{children}</span>
-      </LiquidGlass>
-    </span>
-  );
-}
-
 function AppHeader({ page, go }: { page: Page; go: (page: Page) => void }) {
+  const [menuOpen, setMenuOpen] = useState(false);
   const links: Array<[Page, string]> = [
     ["accueil", "Accueil"],
     ["flotte", "La flotte"],
@@ -262,14 +242,38 @@ function AppHeader({ page, go }: { page: Page; go: (page: Page) => void }) {
         <button className="brand" type="button" onClick={() => go("accueil")} aria-label="Accueil LCH Auto">
           <img src={logoUrl} alt="EURL LCH Automotive Fleet" />
         </button>
-        <nav aria-label="Navigation principale">
+        <nav className="desktop-nav" aria-label="Navigation principale">
           {links.map(([id, label]) => (
             <button className={page === id ? "active" : ""} key={id} type="button" onClick={() => go(id)}>
               {label}
             </button>
           ))}
         </nav>
-        <button className="header-cta" type="button" onClick={() => go("contact")}>Demander un devis</button>
+        <div className="header-actions">
+          <button className="header-cta" type="button" onClick={() => go("contact")}>Demander un devis</button>
+          <button className={`menu-toggle ${menuOpen ? "open" : ""}`} type="button" onClick={() => setMenuOpen((current) => !current)} aria-label="Menu">
+            <span />
+            <span />
+            <span />
+          </button>
+        </div>
+        {menuOpen && (
+          <div className="mobile-menu">
+            {links.map(([id, label]) => (
+              <button
+                className={page === id ? "active" : ""}
+                key={id}
+                type="button"
+                onClick={() => {
+                  setMenuOpen(false);
+                  go(id);
+                }}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
+        )}
       </header>
     </>
   );
@@ -312,23 +316,27 @@ function Hero({ go }: { go: (page: Page) => void }) {
       <div className="hero-overlay" />
       <div className="hero-inner">
         <div className="hero-copy">
-          <span className="eyebrow">EURL LCH Automotive Fleet</span>
+          <span className="hero-badge">Partenaire des entreprises en gestion de mobilite</span>
           <h1>{heroSlides[slide].title}</h1>
           <p>Concentrez-vous sur votre coeur de metier, nous faisons de votre mobilite un levier de performance.</p>
           <div className="hero-actions">
-            <GlassButton onClick={() => go("flotte")}>Voir la flotte</GlassButton>
-            <GlassButton onClick={() => go("contact")} variant="light">Demander un devis</GlassButton>
+            <button className="hero-primary" type="button" onClick={() => go("flotte")}>Voir la flotte</button>
+            <button className="hero-secondary" type="button" onClick={() => go("contact")}>Demander un devis</button>
           </div>
         </div>
-        <div className="hero-panel glass-pro">
-          <span>Offre entreprise</span>
-          <strong>LLD / LMD / Vente / Maintenance</strong>
-          <p>Vehicules touristiques, utilitaires, motos, bus, mini-bus, camions et engins TP.</p>
-        </div>
       </div>
-      <div className="hero-dots">
+      <div className="hero-controls">
+        <button type="button" onClick={() => setSlide((current) => (current - 1 + heroSlides.length) % heroSlides.length)} aria-label="Image precedente">{"<"}</button>
+        <div>
+          {heroSlides.map((item, index) => (
+            <button key={item.image} className={slide === index ? "active" : ""} type="button" onClick={() => setSlide(index)} aria-label={`Slide ${index + 1}`} />
+          ))}
+        </div>
+        <button type="button" onClick={() => setSlide((current) => (current + 1) % heroSlides.length)} aria-label="Image suivante">{">"}</button>
+      </div>
+      <div className="hero-dots" aria-hidden="true">
         {heroSlides.map((item, index) => (
-          <button key={item.image} className={slide === index ? "active" : ""} type="button" onClick={() => setSlide(index)} aria-label={`Slide ${index + 1}`} />
+          <span key={item.image} className={slide === index ? "active" : ""} />
         ))}
       </div>
     </section>
@@ -440,7 +448,25 @@ function FleetPage() {
       <div className="page-title">
         <span className="eyebrow blue">La flotte LCH Auto</span>
         <h1>Citadines, cadres, prestige, utilitaires, motos et materiel roulant.</h1>
+        <p>Filtrez par gamme et consultez les modeles disponibles pour LLD, LMD, vente avec facturation ou mission operationnelle.</p>
       </div>
+      <section className="page-intro-grid">
+        <article>
+          <span>01</span>
+          <h3>Mobilite urbaine</h3>
+          <p>Renault Clio, Symbol, Stepway et equivalents pour commerciaux, administrations et missions quotidiennes.</p>
+        </article>
+        <article>
+          <span>02</span>
+          <h3>Cadres et direction</h3>
+          <p>Berlines et SUV confortables pour managers, dirigeants, visites clients et representation.</p>
+        </article>
+        <article>
+          <span>03</span>
+          <h3>Logistique et terrain</h3>
+          <p>Utilitaires, pick-up, motos, bus, mini-bus, camions et engins TP selon la mission.</p>
+        </article>
+      </section>
       <FleetSection />
     </main>
   );
@@ -462,6 +488,18 @@ function SecondaryPage() {
           </article>
         ))}
       </section>
+      <section className="maintenance-flow">
+        <div>
+          <span className="eyebrow blue">Process</span>
+          <h2>Maintenance organisee pour garder la flotte disponible.</h2>
+        </div>
+        <ol>
+          <li><strong>Diagnostic</strong><span>Controle rapide des besoins techniques et de l'urgence.</span></li>
+          <li><strong>Planification</strong><span>Intervention programmee selon l'activite de l'entreprise.</span></li>
+          <li><strong>Pieces</strong><span>Approvisionnement et remplacement des pieces de rechange.</span></li>
+          <li><strong>Suivi</strong><span>Historique, disponibilite et priorisation des vehicules critiques.</span></li>
+        </ol>
+      </section>
     </main>
   );
 }
@@ -477,6 +515,28 @@ function AboutPage() {
           Notre role : selectionner, fournir, suivre et maintenir les moyens roulants adaptes a chaque mission.
         </p>
       </div>
+      <section className="about-story">
+        <div>
+          <span className="eyebrow blue">Positionnement</span>
+          <h2>Un interlocuteur unique pour location, vente, maintenance et parc roulant.</h2>
+        </div>
+        <div className="story-copy">
+          <p>
+            LCH Auto construit une offre orientee entreprises : contrats longue duree ou moyenne duree,
+            gammes adaptees aux fonctions internes, vehicules utilitaires pour la logistique, motos pour la
+            livraison et materiel roulant pour les besoins terrain.
+          </p>
+          <p>
+            L'objectif est simple : reduire l'immobilisation, clarifier les couts, et permettre aux equipes de
+            travailler avec le bon vehicule au bon moment.
+          </p>
+        </div>
+      </section>
+      <section className="value-grid">
+        <article><span>LLD / LMD</span><strong>Contrats adaptes</strong><p>Solutions de location touristique, utilitaire, pick-up et flotte entreprise.</p></article>
+        <article><span>Gestion</span><strong>Suivi du parc</strong><p>Organisation de la disponibilite et accompagnement selon les priorites metier.</p></article>
+        <article><span>Facturation</span><strong>Vente vehicules</strong><p>Vente de tout type de vehicule avec facturation claire et dossier professionnel.</p></article>
+      </section>
       <BrandMarquee />
     </main>
   );
@@ -490,6 +550,13 @@ function ContactPage() {
         <h1>Demander une proposition flotte.</h1>
         <p>Precisez la categorie, la duree, le nombre de vehicules et le niveau de service attendu.</p>
       </div>
+      <aside className="contact-panel">
+        <h3>Informations utiles</h3>
+        <p>Pour une reponse precise, indiquez la gamme, la quantite, la duree souhaitee, la ville et le type d'utilisation.</p>
+        <div><strong>Telephone</strong><span>+213 000 00 00 00</span></div>
+        <div><strong>Email</strong><span>contact@locationlch.dz</span></div>
+        <div><strong>Zone</strong><span>Algerie</span></div>
+      </aside>
       <form className="contact-form">
         <label>Nom de l'entreprise<input placeholder="Votre societe" /></label>
         <label>Telephone<input placeholder="+213 ..." /></label>
