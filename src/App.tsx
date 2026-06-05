@@ -31,39 +31,26 @@ const heroSlides = [
   },
 ];
 
-function localBrandLogo(label: string, short = label) {
-  const svg = `
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 96">
-      <rect width="240" height="96" rx="18" fill="none"/>
-      <text x="120" y="43" text-anchor="middle" dominant-baseline="middle"
-        font-family="Arial, Helvetica, sans-serif" font-size="31" font-weight="800"
-        fill="#ffffff" letter-spacing="1.5">${short}</text>
-      <line x1="54" y1="64" x2="186" y2="64" stroke="#ffffff" stroke-width="4" stroke-linecap="round" opacity=".72"/>
-    </svg>
-  `;
-  return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
-}
-
 const brandLogos = [
-  ["Renault", localBrandLogo("Renault", "RENAULT")],
-  ["Dacia", localBrandLogo("Dacia", "DACIA")],
-  ["Opel", localBrandLogo("Opel", "OPEL")],
-  ["Geely", localBrandLogo("Geely", "GEELY")],
-  ["MG", localBrandLogo("MG", "MG")],
-  ["Fiat", localBrandLogo("Fiat", "FIAT")],
-  ["Volkswagen", localBrandLogo("Volkswagen", "VW")],
-  ["Audi", localBrandLogo("Audi", "AUDI")],
-  ["Kia", localBrandLogo("Kia", "KIA")],
-  ["Hyundai", localBrandLogo("Hyundai", "HYUNDAI")],
-  ["Toyota", localBrandLogo("Toyota", "TOYOTA")],
-  ["Peugeot", localBrandLogo("Peugeot", "PEUGEOT")],
+  ["Renault", "https://cdn.simpleicons.org/renault/ffffff"],
+  ["Dacia", "https://cdn.simpleicons.org/dacia/ffffff"],
+  ["Opel", "https://cdn.simpleicons.org/opel/ffffff"],
+  ["Geely", "https://commons.wikimedia.org/wiki/Special:FilePath/Geely%20logo.svg"],
+  ["MG", "https://cdn.simpleicons.org/mg/ffffff"],
+  ["Fiat", "https://cdn.simpleicons.org/fiat/ffffff"],
+  ["Volkswagen", "https://cdn.simpleicons.org/volkswagen/ffffff"],
+  ["Audi", "https://cdn.simpleicons.org/audi/ffffff"],
+  ["Kia", "https://cdn.simpleicons.org/kia/ffffff"],
+  ["Hyundai", "https://cdn.simpleicons.org/hyundai/ffffff"],
+  ["Toyota", "https://cdn.simpleicons.org/toyota/ffffff"],
+  ["Peugeot", "https://cdn.simpleicons.org/peugeot/ffffff"],
 ];
 
 const vehicleBrandLogos: Record<string, string> = {
   ...Object.fromEntries(brandLogos),
-  "Mercedes-Benz": localBrandLogo("Mercedes-Benz", "MERCEDES"),
-  Yamaha: localBrandLogo("Yamaha", "YAMAHA"),
-  "LCH Auto": localBrandLogo("LCH Auto", "LCH AUTO"),
+  "Mercedes-Benz": "https://cdn.simpleicons.org/mercedesbenz/ffffff",
+  Yamaha: "https://cdn.simpleicons.org/yamaha/ffffff",
+  "LCH Auto": logoUrl,
 };
 
 function vehicleBrand(name: string) {

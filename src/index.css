@@ -501,6 +501,10 @@ h3 {
   object-fit: contain;
 }
 
+.brand-geely {
+  filter: brightness(0) invert(1);
+}
+
 .brand-mark strong,
 .footer-brand-logo strong {
   display: none;
@@ -813,6 +817,13 @@ h3 {
 
 .vehicle-logo-panel.logo-missing > strong {
   display: block;
+}
+
+.vehicle-brand-logo.brand-lchauto {
+  width: 160px;
+  max-width: 68%;
+  max-height: 78px;
+  filter: brightness(0) invert(1);
 }
 
 .vehicle-info {
