@@ -52,7 +52,7 @@ button {
 }
 
 .topbar strong {
-  font-weight: 800;
+  font-weight: 700;
   letter-spacing: 0.02em;
 }
 
@@ -206,11 +206,11 @@ button {
 
 .eyebrow {
   display: inline-block;
-  margin-bottom: 16px;
+  margin-bottom: 12px;
   color: #7cc7ff;
-  font-size: 0.78rem;
-  font-weight: 900;
-  letter-spacing: 0.16em;
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
 }
 
@@ -227,10 +227,11 @@ p {
 
 h1 {
   max-width: 820px;
-  margin-bottom: 22px;
+  margin-bottom: 18px;
   font-family: "Sora", sans-serif;
-  font-size: clamp(3rem, 6vw, 6.15rem);
-  line-height: 0.98;
+  font-size: clamp(2.35rem, 4.6vw, 4.4rem);
+  font-weight: 700;
+  line-height: 1.04;
   letter-spacing: 0;
 }
 
@@ -238,20 +239,24 @@ h2 {
   margin-bottom: 0;
   font-family: "Sora", sans-serif;
   color: #111827;
-  font-size: clamp(2rem, 4.5vw, 4.6rem);
-  line-height: 1;
+  font-size: clamp(1.75rem, 3.2vw, 3.1rem);
+  font-weight: 700;
+  line-height: 1.08;
 }
 
 h3 {
   font-family: "Sora", sans-serif;
   color: #111827;
+  font-size: 1.08rem;
+  font-weight: 700;
+  line-height: 1.25;
 }
 
 .hero-copy p {
   max-width: 680px;
   color: rgba(255, 255, 255, 0.82);
-  font-size: 1.16rem;
-  line-height: 1.75;
+  font-size: 1.06rem;
+  line-height: 1.68;
 }
 
 .hero-badge {
@@ -265,7 +270,7 @@ h3 {
   color: #ffffff;
   padding: 8px 13px;
   font-size: 0.76rem;
-  font-weight: 900;
+  font-weight: 800;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   backdrop-filter: blur(16px);
@@ -287,7 +292,7 @@ h3 {
   gap: 10px;
   border-radius: 8px;
   padding: 13px 22px;
-  font-weight: 900;
+  font-weight: 800;
   white-space: nowrap;
 }
 
@@ -353,7 +358,7 @@ h3 {
 .hero-panel span {
   color: #7cc7ff;
   font-size: 0.75rem;
-  font-weight: 900;
+  font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
 }
@@ -395,8 +400,8 @@ h3 {
 .brand-marquee-title span {
   color: #7cc7ff;
   font-size: 0.78rem;
-  font-weight: 900;
-  letter-spacing: 0.14em;
+  font-weight: 800;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
 }
 
@@ -462,7 +467,7 @@ h3 {
 }
 
 .brand-chip span {
-  font-weight: 900;
+  font-weight: 700;
 }
 
 @keyframes marquee {
@@ -510,7 +515,6 @@ h3 {
   gap: 16px;
 }
 
-.activity-grid article,
 .vehicle-card,
 .secondary-grid article,
 .about-preview,
@@ -524,9 +528,83 @@ h3 {
   box-shadow: 0 18px 44px rgba(15, 23, 42, 0.07);
 }
 
+.activities-shell {
+  display: grid;
+  grid-template-columns: minmax(300px, 0.72fr) minmax(0, 1fr);
+  gap: clamp(24px, 5vw, 64px);
+  align-items: stretch;
+}
+
+.activities-intro {
+  display: grid;
+  align-content: start;
+  gap: 18px;
+  padding: clamp(26px, 4vw, 40px);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 18px 44px rgba(15, 23, 42, 0.07);
+}
+
+.activities-intro h2 {
+  font-size: clamp(1.55rem, 2.55vw, 2.25rem);
+}
+
+.activities-intro p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.activity-metrics {
+  display: grid;
+  gap: 10px;
+  margin: 8px 0 4px;
+}
+
+.activity-metrics div {
+  display: grid;
+  gap: 4px;
+  padding: 14px;
+  border-radius: 8px;
+  background: #f8fbff;
+}
+
+.activity-metrics strong {
+  color: var(--primary);
+  font-weight: 800;
+}
+
+.activity-metrics span {
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.activities-intro button {
+  width: fit-content;
+  min-height: 44px;
+  border: 1px solid rgba(31, 94, 255, 0.22);
+  border-radius: 8px;
+  background: var(--blue);
+  color: white;
+  padding: 11px 16px;
+  font-weight: 800;
+}
+
+.activity-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
 .activity-grid article {
-  min-height: 250px;
-  padding: 24px;
+  min-height: 180px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 18px;
+  padding: 22px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 18px 44px rgba(15, 23, 42, 0.07);
 }
 
 .page-intro-grid {
@@ -543,7 +621,7 @@ h3 {
 .value-grid span {
   color: var(--blue);
   font-size: 0.78rem;
-  font-weight: 900;
+  font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
 }
@@ -559,10 +637,16 @@ h3 {
 }
 
 .activity-grid article > span {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border-radius: 8px;
+  background: #eef4ff;
   color: var(--blue);
   font-family: "Sora", sans-serif;
-  font-size: 1.45rem;
-  font-weight: 900;
+  font-size: 0.92rem;
+  font-weight: 700;
 }
 
 .activity-grid p,
@@ -574,23 +658,6 @@ h3 {
   line-height: 1.65;
 }
 
-.activity-cta {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 18px;
-  margin-top: 18px;
-  padding: 20px;
-  border-radius: 10px;
-  background: #eaf1ff;
-}
-
-.activity-cta p {
-  margin: 0;
-  color: #334155;
-}
-
-.activity-cta button,
 .about-preview button,
 .contact-form button {
   min-height: 48px;
@@ -599,7 +666,7 @@ h3 {
   background: var(--blue);
   color: white;
   padding: 12px 16px;
-  font-weight: 900;
+  font-weight: 800;
 }
 
 .fleet-filters {
@@ -616,7 +683,7 @@ h3 {
   background: #fff;
   color: #111827;
   padding: 9px 12px;
-  font-weight: 900;
+  font-weight: 700;
 }
 
 .fleet-filters button.active,
@@ -647,7 +714,7 @@ h3 {
 .vehicle-info span {
   color: var(--blue);
   font-size: 0.78rem;
-  font-weight: 900;
+  font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
@@ -678,7 +745,10 @@ h3 {
 
 .page-title h1 {
   color: #111827;
-  font-size: clamp(2.8rem, 5.8vw, 5.6rem);
+  max-width: 840px;
+  font-size: clamp(2rem, 3.2vw, 3rem);
+  font-weight: 700;
+  line-height: 1.08;
 }
 
 .secondary-grid {
@@ -721,6 +791,7 @@ h3 {
 
 .maintenance-flow li strong {
   color: var(--primary);
+  font-weight: 750;
 }
 
 .story-copy {
@@ -786,7 +857,7 @@ h3 {
   display: grid;
   gap: 8px;
   color: #111827;
-  font-weight: 900;
+  font-weight: 700;
 }
 
 .contact-form input,
@@ -813,7 +884,7 @@ h3 {
 .footer-brands p {
   color: rgba(255, 255, 255, 0.55);
   font-size: 0.78rem;
-  font-weight: 900;
+  font-weight: 700;
   letter-spacing: 0.16em;
   text-transform: uppercase;
 }
@@ -861,7 +932,7 @@ h3 {
 .footer-main h4 {
   color: rgba(255, 255, 255, 0.55);
   font-size: 0.78rem;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
 }
 
@@ -891,6 +962,7 @@ h3 {
 
   .site-header,
   .hero-inner,
+  .activities-shell,
   .section-head.split,
   .about-preview,
   .maintenance-flow,
@@ -936,7 +1008,7 @@ h3 {
     border-radius: 8px;
     background: rgba(7, 21, 47, 0.07);
     color: var(--primary);
-    font-weight: 900;
+    font-weight: 700;
     text-align: left;
     padding: 10px 12px;
   }
@@ -946,7 +1018,6 @@ h3 {
     color: white;
   }
 
-  .activity-grid,
   .vehicle-grid,
   .secondary-grid,
   .page-intro-grid,
@@ -991,11 +1062,10 @@ h3 {
 
   h1,
   .page-title h1 {
-    font-size: clamp(2.55rem, 13vw, 4.1rem);
+    font-size: clamp(2.1rem, 10.5vw, 3.15rem);
   }
 
   .hero-actions,
-  .activity-cta,
   .footer-bottom {
     flex-direction: column;
     align-items: stretch;
@@ -1007,6 +1077,15 @@ h3 {
   .page-intro-grid,
   .value-grid {
     grid-template-columns: 1fr;
+  }
+
+  .activity-grid article {
+    grid-template-columns: 1fr;
+    min-height: auto;
+  }
+
+  .activities-intro button {
+    width: 100%;
   }
 
   .brand-marquee-title {

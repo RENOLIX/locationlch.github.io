@@ -352,22 +352,31 @@ function Hero({ go }: { go: (page: Page) => void }) {
 function Activities({ go }: { go: (page: Page) => void }) {
   return (
     <section className="section activities">
-      <div className="section-head">
-        <span className="eyebrow blue">Activite principale</span>
-        <h2>Une offre claire pour les entreprises.</h2>
-      </div>
-      <div className="activity-grid">
-        {primaryActivities.map(([title, text], index) => (
-          <article key={title}>
-            <span>{String(index + 1).padStart(2, "0")}</span>
-            <h3>{title}</h3>
-            <p>{text}</p>
-          </article>
-        ))}
-      </div>
-      <div className="activity-cta">
-        <p>La maintenance et les pieces de rechange sont traitees dans une page separee pour clarifier l'activite secondaire.</p>
-        <button type="button" onClick={() => go("secondaire")}>Voir activite secondaire</button>
+      <div className="activities-shell">
+        <div className="activities-intro">
+          <span className="eyebrow blue">Activite principale</span>
+          <h2>Des solutions de mobilite pour chaque usage professionnel.</h2>
+          <p>
+            LCH Auto structure la location, la vente et la mise a disposition de moyens roulants pour les
+            entreprises : vehicules legers, utilitaires, motos, bus, camions et engins TP.
+          </p>
+          <div className="activity-metrics">
+            <div><strong>LLD / LMD</strong><span>Contrats flexibles</span></div>
+            <div><strong>Multi-gammes</strong><span>Urbain, cadre, prestige, logistique</span></div>
+          </div>
+          <button type="button" onClick={() => go("secondaire")}>Maintenance et pieces</button>
+        </div>
+        <div className="activity-grid">
+          {primaryActivities.map(([title, text], index) => (
+            <article key={title}>
+              <span>{String(index + 1).padStart(2, "0")}</span>
+              <div>
+                <h3>{title}</h3>
+                <p>{text}</p>
+              </div>
+            </article>
+          ))}
+        </div>
       </div>
     </section>
   );
@@ -521,27 +530,31 @@ function AboutPage() {
           Notre role : selectionner, fournir, suivre et maintenir les moyens roulants adaptes a chaque mission.
         </p>
       </div>
-      <section className="about-story">
-        <div>
-          <span className="eyebrow blue">Positionnement</span>
-          <h2>Un interlocuteur unique pour location, vente, maintenance et parc roulant.</h2>
-        </div>
-        <div className="story-copy">
-          <p>
-            LCH Auto construit une offre orientee entreprises : contrats longue duree ou moyenne duree,
-            gammes adaptees aux fonctions internes, vehicules utilitaires pour la logistique, motos pour la
-            livraison et materiel roulant pour les besoins terrain.
-          </p>
-          <p>
-            L'objectif est simple : reduire l'immobilisation, clarifier les couts, et permettre aux equipes de
-            travailler avec le bon vehicule au bon moment.
-          </p>
-        </div>
+      <section className="section secondary-grid about-capabilities">
+        <article>
+          <h3>Location entreprise</h3>
+          <p>Contrats LLD et LMD pour vehicules touristiques, utilitaires, pick-up, motos et materiel roulant.</p>
+        </article>
+        <article>
+          <h3>Gestion de mobilite</h3>
+          <p>Une organisation pensee pour donner aux equipes le bon vehicule, au bon moment, selon la mission.</p>
+        </article>
+        <article>
+          <h3>Vente et suivi</h3>
+          <p>Vente avec facturation, accompagnement administratif, maintenance et pieces de rechange.</p>
+        </article>
       </section>
-      <section className="value-grid">
-        <article><span>LLD / LMD</span><strong>Contrats adaptes</strong><p>Solutions de location touristique, utilitaire, pick-up et flotte entreprise.</p></article>
-        <article><span>Gestion</span><strong>Suivi du parc</strong><p>Organisation de la disponibilite et accompagnement selon les priorites metier.</p></article>
-        <article><span>Facturation</span><strong>Vente vehicules</strong><p>Vente de tout type de vehicule avec facturation claire et dossier professionnel.</p></article>
+      <section className="maintenance-flow about-flow">
+        <div>
+          <span className="eyebrow blue">Notre approche</span>
+          <h2>Une gestion de flotte claire, suivie et adaptee aux entreprises.</h2>
+        </div>
+        <ol>
+          <li><strong>Analyse du besoin</strong><span>Identification de la gamme, de la duree, du volume et de l'usage terrain.</span></li>
+          <li><strong>Selection du parc</strong><span>Choix des vehicules selon les fonctions : urbain, cadres, direction, utilitaire ou logistique.</span></li>
+          <li><strong>Mise a disposition</strong><span>Organisation de la location, de la vente avec facturation ou du materiel roulant demande.</span></li>
+          <li><strong>Suivi operationnel</strong><span>Maintenance, pieces de rechange et accompagnement pour limiter l'immobilisation.</span></li>
+        </ol>
       </section>
       <BrandMarquee />
     </main>
