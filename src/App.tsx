@@ -13,6 +13,7 @@ type Vehicle = {
 
 const base = import.meta.env.BASE_URL;
 const logoUrl = `${base}images/lch-logo.png`;
+const phoneNumber = "0560666705";
 
 const heroSlides = [
   {
@@ -33,7 +34,7 @@ const brandLogos = [
   ["Renault", "https://cdn.simpleicons.org/renault/ffffff"],
   ["Dacia", "https://cdn.simpleicons.org/dacia/ffffff"],
   ["Opel", "https://cdn.simpleicons.org/opel/ffffff"],
-  ["Geely", "https://cdn.simpleicons.org/geely/ffffff"],
+  ["Geely", "https://commons.wikimedia.org/wiki/Special:FilePath/Geely%20logo.svg"],
   ["MG", "https://cdn.simpleicons.org/mg/ffffff"],
   ["Fiat", "https://cdn.simpleicons.org/fiat/ffffff"],
   ["Volkswagen", "https://cdn.simpleicons.org/volkswagen/ffffff"],
@@ -233,7 +234,7 @@ function AppHeader({ page, go }: { page: Page; go: (page: Page) => void }) {
     <>
       <div className="topbar">
         <div>
-          <span>Tel : +213 000 00 00 00</span>
+          <span>Tel : {phoneNumber}</span>
           <span>contact@locationlch.dz</span>
         </div>
         <strong>Partenaire des entreprises en gestion de mobilite</strong>
@@ -290,7 +291,19 @@ function BrandMarquee({ dark = false }: { dark?: boolean }) {
         <div className="marquee-track">
           {[...brandLogos, ...brandLogos].map(([name, src], index) => (
             <div className="brand-chip" key={`${name}-${index}`}>
-              <img src={src} alt={`Logo ${name}`} loading="lazy" />
+              <div className="brand-mark">
+                <img
+                  className={`brand-logo brand-${name.toLowerCase().replace(/[^a-z0-9]/g, "")}`}
+                  src={src}
+                  alt={`Logo ${name}`}
+                  loading="lazy"
+                  onError={(event) => {
+                    event.currentTarget.style.display = "none";
+                    event.currentTarget.parentElement?.classList.add("logo-missing");
+                  }}
+                />
+                <strong>{name.slice(0, 3).toUpperCase()}</strong>
+              </div>
               <span>{name}</span>
             </div>
           ))}
@@ -326,18 +339,11 @@ function Hero({ go }: { go: (page: Page) => void }) {
         </div>
       </div>
       <div className="hero-controls">
-        <button type="button" onClick={() => setSlide((current) => (current - 1 + heroSlides.length) % heroSlides.length)} aria-label="Image precedente">{"<"}</button>
         <div>
           {heroSlides.map((item, index) => (
             <button key={item.image} className={slide === index ? "active" : ""} type="button" onClick={() => setSlide(index)} aria-label={`Slide ${index + 1}`} />
           ))}
         </div>
-        <button type="button" onClick={() => setSlide((current) => (current + 1) % heroSlides.length)} aria-label="Image suivante">{">"}</button>
-      </div>
-      <div className="hero-dots" aria-hidden="true">
-        {heroSlides.map((item, index) => (
-          <span key={item.image} className={slide === index ? "active" : ""} />
-        ))}
       </div>
     </section>
   );
@@ -553,7 +559,7 @@ function ContactPage() {
       <aside className="contact-panel">
         <h3>Informations utiles</h3>
         <p>Pour une reponse precise, indiquez la gamme, la quantite, la duree souhaitee, la ville et le type d'utilisation.</p>
-        <div><strong>Telephone</strong><span>+213 000 00 00 00</span></div>
+        <div><strong>Telephone</strong><span>{phoneNumber}</span></div>
         <div><strong>Email</strong><span>contact@locationlch.dz</span></div>
         <div><strong>Zone</strong><span>Algerie</span></div>
       </aside>
@@ -576,8 +582,20 @@ function SiteFooter({ go }: { go: (page: Page) => void }) {
       <div className="footer-brands">
         <p>Marques disponibles</p>
         <div>
-          {brandLogos.slice(0, 10).map(([name, src]) => (
-            <img src={src} alt={name} key={name} loading="lazy" />
+          {brandLogos.map(([name, src]) => (
+            <span className="footer-brand-logo" key={name}>
+              <img
+                className={`brand-logo brand-${name.toLowerCase().replace(/[^a-z0-9]/g, "")}`}
+                src={src}
+                alt={name}
+                loading="lazy"
+                onError={(event) => {
+                  event.currentTarget.style.display = "none";
+                  event.currentTarget.parentElement?.classList.add("logo-missing");
+                }}
+              />
+              <strong>{name.slice(0, 3).toUpperCase()}</strong>
+            </span>
           ))}
         </div>
       </div>
@@ -603,7 +621,7 @@ function SiteFooter({ go }: { go: (page: Page) => void }) {
         <div>
           <h4>Contact</h4>
           <span>Algerie</span>
-          <span>+213 000 00 00 00</span>
+          <span>{phoneNumber}</span>
           <span>contact@locationlch.dz</span>
         </div>
       </div>
