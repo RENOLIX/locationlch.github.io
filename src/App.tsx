@@ -15,6 +15,7 @@ const base = import.meta.env.BASE_URL;
 const logoUrl = `${base}images/lch-logo.png`;
 const aboutFleetImage = `${base}images/about-fleet.png`;
 const phoneNumber = "0560666705";
+const contactEmail = "contact@lch-automotive.com";
 
 const heroSlides = [
   {
@@ -32,24 +33,24 @@ const heroSlides = [
 ];
 
 const brandLogos = [
-  ["Renault", "https://cdn.simpleicons.org/renault/ffffff"],
-  ["Dacia", "https://cdn.simpleicons.org/dacia/ffffff"],
-  ["Opel", "https://cdn.simpleicons.org/opel/ffffff"],
-  ["Geely", "https://commons.wikimedia.org/wiki/Special:FilePath/Geely%20logo.svg"],
-  ["MG", "https://cdn.simpleicons.org/mg/ffffff"],
-  ["Fiat", "https://cdn.simpleicons.org/fiat/ffffff"],
-  ["Volkswagen", "https://cdn.simpleicons.org/volkswagen/ffffff"],
-  ["Audi", "https://cdn.simpleicons.org/audi/ffffff"],
-  ["Kia", "https://cdn.simpleicons.org/kia/ffffff"],
-  ["Hyundai", "https://cdn.simpleicons.org/hyundai/ffffff"],
-  ["Toyota", "https://cdn.simpleicons.org/toyota/ffffff"],
-  ["Peugeot", "https://cdn.simpleicons.org/peugeot/ffffff"],
+  ["Renault", `${base}images/brands/renault.svg`],
+  ["Dacia", `${base}images/brands/dacia.svg`],
+  ["Opel", `${base}images/brands/opel.svg`],
+  ["Geely", `${base}images/brands/geely.svg`],
+  ["MG", `${base}images/brands/mg.svg`],
+  ["Fiat", `${base}images/brands/fiat.svg`],
+  ["Volkswagen", `${base}images/brands/volkswagen.svg`],
+  ["Audi", `${base}images/brands/audi.svg`],
+  ["Kia", `${base}images/brands/kia.svg`],
+  ["Hyundai", `${base}images/brands/hyundai.svg`],
+  ["Toyota", `${base}images/brands/toyota.svg`],
+  ["Peugeot", `${base}images/brands/peugeot.svg`],
 ];
 
 const vehicleBrandLogos: Record<string, string> = {
   ...Object.fromEntries(brandLogos),
-  "Mercedes-Benz": "https://cdn.simpleicons.org/mercedesbenz/ffffff",
-  Yamaha: "https://cdn.simpleicons.org/yamaha/ffffff",
+  "Mercedes-Benz": `${base}images/brands/mercedes-benz.svg`,
+  Yamaha: `${base}images/brands/yamaha.svg`,
   "LCH Auto": logoUrl,
 };
 
@@ -258,9 +259,9 @@ function AppHeader({ page, go }: { page: Page; go: (page: Page) => void }) {
   return (
     <>
       <div className="topbar">
-        <div>
-          <span>Tel : {phoneNumber}</span>
-          <span>contact@locationlch.dz</span>
+        <div className="topbar-contact">
+          <a href={`tel:${phoneNumber}`}>Tel : {phoneNumber}</a>
+          <a href={`mailto:${contactEmail}`}>{contactEmail}</a>
         </div>
         <strong>Partenaire des entreprises en gestion de mobilite</strong>
       </div>
@@ -635,7 +636,7 @@ function ContactPage() {
         <h3>Informations utiles</h3>
         <p>Pour une reponse precise, indiquez la gamme, la quantite, la duree souhaitee, la ville et le type d'utilisation.</p>
         <div><strong>Telephone</strong><span>{phoneNumber}</span></div>
-        <div><strong>Email</strong><span>contact@locationlch.dz</span></div>
+        <div><strong>Email</strong><a href={`mailto:${contactEmail}`}>{contactEmail}</a></div>
         <div><strong>Zone</strong><span>Algerie</span></div>
       </aside>
       <form className="contact-form">
@@ -698,7 +699,7 @@ function SiteFooter({ go }: { go: (page: Page) => void }) {
           <h4>Contact</h4>
           <span>Algerie</span>
           <span>{phoneNumber}</span>
-          <span>contact@locationlch.dz</span>
+          <span>{contactEmail}</span>
         </div>
       </div>
       <div className="footer-bottom">
